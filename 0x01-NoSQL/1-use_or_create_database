@@ -1,0 +1,2 @@
+// creating or using a database , mongodb create if it doesnt exist
+use my_db
