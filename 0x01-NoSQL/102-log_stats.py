@@ -22,6 +22,6 @@ if __name__ == '__main__':
             {'$sort': {'count': -1}},
             {'$limit': 10}
             ]
-    print('IPs')
+    print('IPs:')
     for x in nginx_collection.aggregate(pipe):
         print('\t{}: {}'.format(x['_id'], x['count']))
