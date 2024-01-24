@@ -6,21 +6,21 @@ from typing import Union, Callable, Optional
 from functools import wraps
 
 
-def count_calls(fn: Callable) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """
     dcorator that counts number of time sthe method is called
     a Callable
     """
-    key = fn.__qualname__
+    key = method.__qualname__
 
-    @wraps(fn)
+    @wraps(method)
     def wrapper(self, *args, **kwargs):
         """
         function to  increments the count for that key every time
         method is called
         """
         self._redis.incr(key)
-        return fn(self, *args, **kwargs)
+        return method(self, *args, **kwargs)
     return wrapper
 
 
