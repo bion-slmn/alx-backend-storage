@@ -13,10 +13,11 @@ def count_calls(func: Callable) -> Callable:
     Args:
         func (callable): the function to decorate
     '''
+    key = func.__qualname__
+
     @wraps(func)
     def inner(self, args):
         ''' inner function of decorator'''
-        key = func.__qualname__
         self._redis.incr(key)
         return func(self, args)
     return inner
