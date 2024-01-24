@@ -30,7 +30,8 @@ class Cache:
     def __init__(self):
         self._redis = redis.Redis()
         self._redis.flushdb()
-
+    
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """it stores a key in database.
         Args:
