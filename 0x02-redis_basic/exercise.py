@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 '''this module define a a class cache'''
-from functools import wraps
 import redis
-from typing import Union, Optional, Callable
 import uuid
+from functools import wraps
+from typing import Union, Optional, Callable
 
 
 def count_calls(func: Callable) -> Callable:
