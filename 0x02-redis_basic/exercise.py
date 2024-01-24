@@ -7,19 +7,17 @@ import uuid
 
 
 def count_calls(func: Callable) -> Callable:
-    '''this is a decorator function that that increments the count
-    for that key every time the method is called and
-    returns the value returned by the original method.
+    '''counts how many time a method is called
     Args:
         func (callable): the function to decorate
     '''
     key = func.__qualname__
 
     @wraps(func)
-    def inner(self, args):
+    def inner(self, *args, **kwargs):
         ''' inner function of decorator'''
         self._redis.incr(key)
-        return func(self, args)
+        return func(self, *args, **kwargs)
     return inner
 
 
