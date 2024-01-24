@@ -10,7 +10,6 @@ class Cache():
     in redis cacche
     '''
     def __init__(self):
-        '''intialising the class'''
         self._redis = redis.Redis()
         self._redis.flushdb()
 
