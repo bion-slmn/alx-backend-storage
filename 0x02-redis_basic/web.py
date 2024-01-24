@@ -6,7 +6,7 @@ import redis
 from typing import Callable
 
 
-def counter_fun(func: Callable) -> None:
+def counter_fun(func: Callable) -> Callable:
     '''decorator to track how many times a url is called
     and cache but the cache expires in 10sec'''
     redis_client = redis.Redis(decode_responses=True)
