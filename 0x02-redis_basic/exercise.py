@@ -6,22 +6,22 @@ from functools import wraps
 from typing import Union, Optional, Callable
 
 
-def count_calls(func: Callable) -> Callable:
-    '''counts how many time a method is called
-    Args:
-        func (callable): the function to decorate
-    '''
-    key = func.__qualname__
+def count_calls(fn: Callable) -> Callable:
+    """
+    dcorator that counts number of time sthe method is called
+    a Callable
+    """
+    key = fn.__qualname__
 
-    @wraps(func)
-    def inner(self, *args, **kwargs):
-        ''' inner function of decorator
-        it takes args same as the func
-        and it callst funct
-        '''
+    @wraps(fn)
+    def wrapper(self, *args, **kwargs):
+        """
+        function to  increments the count for that key every time
+        method is called
+        """
         self._redis.incr(key)
-        return func(self, *args, **kwargs)
-    return inner
+        return fn(self, *args, **kwargs)
+    return wrapper
 
 
 class Cache():
