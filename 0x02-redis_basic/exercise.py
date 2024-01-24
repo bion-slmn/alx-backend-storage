@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 '''this module define a a class cache'''
-import redis
 import uuid
+import redis
 from functools import wraps
 from typing import Union, Optional, Callable
 
