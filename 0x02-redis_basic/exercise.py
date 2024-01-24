@@ -15,7 +15,10 @@ def count_calls(func: Callable) -> Callable:
 
     @wraps(func)
     def inner(self, *args, **kwargs):
-        ''' inner function of decorator'''
+        ''' inner function of decorator
+        it takes args same as the func
+        and it callst funct
+        '''
         self._redis.incr(key)
         return func(self, *args, **kwargs)
     return inner
