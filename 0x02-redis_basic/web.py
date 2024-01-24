@@ -10,7 +10,7 @@ def counter_fun(func: Callable) -> Callable:
     '''decorator to track how many times a url is called
     and cache but the cache expires in 10sec'''
     redis_client = redis.Redis()
-    
+
     @wraps(func)
     def inner(url):
         '''innner function for wdecorator'''
@@ -32,6 +32,7 @@ def get_page(url: str) -> str:
     '''this function get a page and return the html of tha page'''
     html = requests.get(url).text
     return html
+
 
 if __name__ == "__main__":
     get_page('http://slowwly.robertomurray.co.uk')
