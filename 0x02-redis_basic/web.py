@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 ''' this module implements function track how many times a url is called'''
-
 import requests
 import redis
+from functools import wraps
 from typing import Callable
 
 
@@ -10,7 +10,8 @@ def counter_fun(func: Callable) -> Callable:
     '''decorator to track how many times a url is called
     and cache but the cache expires in 10sec'''
     redis_client = redis.Redis(decode_responses=True)
-
+    
+    @wrap(func)
     def inner(url):
 
         cached_html = redis_client.get(url)
