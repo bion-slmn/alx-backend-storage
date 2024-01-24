@@ -6,6 +6,20 @@ from typing import Union, Callable, Optional
 from functools import wraps
 
 
+def replay(method: Callable) -> None:
+    '''function to display the history of calls of another
+    function'''
+    key = method.__qualname__
+    redis_client = redis.Redis(decode_responses=True)
+
+    inputs = redis_client.lrange("{}:inputs".format(key), 0, -1)
+    outputs = redis_client.lrange("{}:outputs".format(key), 0, -1)
+
+    print('{} was called {} times'.format(key, len(inputs)))
+    for arg, result in zip(inputs, outputs):
+        print("{}(*{}) -> {}".format(key, arg, result))
+
+
 def call_history(method: Callable) -> Callable:
     '''decorator function to store the history of tiputs  and outputs
     of a function'''
