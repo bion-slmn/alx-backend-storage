@@ -1,8 +1,25 @@
 #!/usr/bin/env python3
 '''this module define a a class cache'''
+from functools import wraps
 import redis
 from typing import Union, Optional, Callable
 import uuid
+
+
+def count_calls(func: Callable) -> Callable:
+    '''this is a decorator function that that increments the count
+    for that key every time the method is called and
+    returns the value returned by the original method.
+    Args:
+        func (callable): the function to decorate
+    '''
+    @wraps(func)
+    def inner(self, args):
+        ''' inner function of decorator'''
+        key = func.__qualname__
+        self._redis.incr(key)
+        return func(self, args)
+    return inner
 
 
 class Cache():
@@ -13,6 +30,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[int, str, float, bytes]) -> str:
         '''this method generates a random key and store it redis
         Args:
