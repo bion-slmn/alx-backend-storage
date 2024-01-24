@@ -5,7 +5,7 @@ from typing import Union
 import uuid
 
 
-class Cache:
+class Cache():
     '''a cache class defined'''
     def __init__(self):
         '''intialising the class'''
@@ -17,3 +17,5 @@ class Cache:
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Callable =None)
