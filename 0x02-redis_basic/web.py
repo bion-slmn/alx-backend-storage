@@ -13,7 +13,7 @@ def counter_fun(func: Callable) -> Callable:
     
     @wraps(func)
     def inner(url):
-
+        '''innner function for wdecorator'''
         cached_html = redis_client.get(url)
         if cached_html:
             return cached_html
