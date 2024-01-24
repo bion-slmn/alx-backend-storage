@@ -12,12 +12,12 @@ def call_history(method: Callable) -> Callable:
     key = method.__qualname__
 
     @wraps(method)
-    def inner(self, args):
+    def inner(self, *args, **kwargs):
         '''inner function of decorator function'''
         inputkey = key + ":inputs"
         outputkey = key + ":outputs"
         self._redis.rpush(inputkey, str(args))
-        result = method(self, args)
+        result = method(self, *args, **kwargs)
         self._redis.rpush(outputkey, result)
         return result
 
