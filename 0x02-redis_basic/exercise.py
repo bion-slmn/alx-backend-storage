@@ -5,6 +5,24 @@ import uuid
 from typing import Union, Callable, Optional
 
 
+def count_calls(fn: Callable) -> Callable:
+    """
+    dcorator that counts number of time sthe method is called
+    a Callable
+    """
+    key = fn.__qualname__
+
+    @wraps(fn)
+    def wrapper(self, *args, **kwargs):
+        """
+        function to  increments the count for that key every time
+        method is called
+        """
+        self._redis.incr(key)
+        return fn(self, *args, **kwargs)
+    return wrapper
+
+
 class Cache:
     """This class is that deines a way to store data
     in a Redis cache
