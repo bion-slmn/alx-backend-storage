@@ -11,7 +11,7 @@ def counter_fun(func: Callable) -> Callable:
     and cache but the cache expires in 10sec'''
     redis_client = redis.Redis(decode_responses=True)
     
-    @wrap(func)
+    @wraps(func)
     def inner(url):
 
         cached_html = redis_client.get(url)
@@ -20,7 +20,6 @@ def counter_fun(func: Callable) -> Callable:
 
         key = 'count:' + url
         redis_client.incr(key)
-
         result = func(url)
         redis_client.set(url, result, ex=10)
 
