@@ -15,7 +15,7 @@ def replay(method: Callable) -> None:
     inputs = redis_client.lrange("{}:inputs".format(key), 0, -1)
     outputs = redis_client.lrange("{}:outputs".format(key), 0, -1)
 
-    print('{} was called {} times'.format(key, len(inputs)))
+    print('{} was called {} times:'.format(key, len(inputs)))
     for arg, result in zip(inputs, outputs):
         print("{}(*{}) -> {}".format(key, arg, result))
 
