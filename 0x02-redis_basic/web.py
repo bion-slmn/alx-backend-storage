@@ -23,6 +23,7 @@ def counter_fun(func: Callable) -> Callable:
 
         result = func(url)
         redis_client.set(url, result, ex=10)
+        redis_client.expire(url, 10)
         return result
     return inner
 
