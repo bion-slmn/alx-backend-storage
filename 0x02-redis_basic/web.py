@@ -14,15 +14,15 @@ def counter_fun(func: Callable) -> Callable:
     @wraps(func)
     def inner(url):
         '''innner function for wdecorator'''
+        key = 'count:' + url
+        redis_client.incr(key)
+
         cached_html = redis_client.get(url)
         if cached_html:
             return cached_html.decode("utf-8")
 
-        key = 'count:' + url
-        redis_client.incr(key)
         result = func(url)
         redis_client.set(url, result, ex=10)
-
         return result
     return inner
 
